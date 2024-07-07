@@ -14,3 +14,15 @@ spring:
           uri: http://localhost:8083
           predicates:
             - Path=/api/emails/**
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,metrics"
+    enabled-by-default: false
+  endpoint:
+    health:
+      enabled: true
+      show-details: always
+    metrics:
+      enabled: true
