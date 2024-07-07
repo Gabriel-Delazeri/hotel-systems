@@ -1,5 +1,9 @@
 version: '3.9'
 
+networks:
+  my-network:
+    driver: bridge
+
 services:
   java_db:
     container_name: java_db
@@ -33,29 +37,18 @@ services:
     volumes:
       - esdata:/usr/share/elasticsearch/data
 
-  api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    networks:
+      - my-network
     ports:
-      - "8080:8080"
-    depends_on:
-      - java_db
-      - rabbitmq
-      - elasticsearch
-      
-  hotel-service:
-    build:
-      context: ./hotel-service  
-    container_name: hotel-service
-    ports:
-      - "8081:8081"  
-    environment:
-      SPRING_ELASTICSEARCH_URIS: elasticsearch:9200 
-    depends_on:  
-      - elasticsearch  
+      - "9090:9090"
 
 volumes:
   pgdata:
   rabbitmq_data:
   esdata:
+  prometheus_data:
