@@ -37,7 +37,7 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
 - Java
 - Spring Boot
 - RabbitMQ
-- Postgresql (compartilhado com Serviço de Notificações)
+- Postgresql (compartilhado com Serviço de Reservas)
 ## Funcionalidades Implementadas
 
 - Pesquisar hotéis com filtros por quartos e capacidade usando Elasticsearch para consultas otimizadas.
