@@ -13,6 +13,45 @@ Sistema de rede hoteleira com funcionalidades de busca, filtragem, comparação 
 
 
 
+## Arquitetura
+
+1.  ### API Gateway
+O API Gateway atua como ponto de entrada para os clientes acessarem as funcionalidades da api. Ele roteia as requisições para os microsserviços apropriados e fornece uma interface unificada.
+ - Java
+ - Spring Boot
+
+2. ### Serviço de Hotéis
+O Serviço de Hotéis é dedicado às funcionalidades de busca de hotéis. Decidi utilizar Elasticsearch para capacidades avançadas de busca, possibilitando a recuperação eficiente e rápida de informações sobre hotéis com base em vários critérios.
+- Java
+- Spring Boot
+- Elasticsearch
+
+3. ### Serviço de Reservas
+O Serviço de Reservas gerencia a funcionalidade de reserva de quartos de hotel. Decidi usar o PostgreSQL para armazenamento persistente de dados e comunico com microsserviço de notificações para enviar e-mails de confirmação durante o processo de reserva.
+- Java
+- Spring Boot
+- Postgresql (compartilhado com Serviço de Notificações)
+
+4. ### Serviço de Notificações
+O Serviço de Notificações é responsável por enviar notificações aos usuários. Ele produz e consume eventos em uma fila gerenciada por RabbitMQ, além disso, persiste entidades de e-mail em banco de dados PostgreSQL.
+- Java
+- Spring Boot
+- RabbitMQ
+- Postgresql (compartilhado com Serviço de Notificações)
+## Funcionalidades Implementadas
+
+- Pesquisar hotéis com filtros por quartos e capacidade usando Elasticsearch para consultas otimizadas.
+- Comparar dois ou mais hotéis, com cobertura de teste para validar o resultado.
+- Pesquisar hotéis individualmente por ID.
+- Reservar um quarto de hotel para uma data específica e armazenar no banco de dados PostgreSQL com foco na consistência aliada à performance.
+- Envio de e-mails utilizando RabbitMQ para gerenciamento de filas, informando o sucesso da reserva.
+
+## Funcionalidades a serem implementadas
+
+- Validação de parâmetros API.
+- Logs para cobertura de aplicativos.
+- Pesquise hotéis por geolocalização.
+- Containerização completa da aplicação.
 ## Instalação
 
 ### Pré-requisitos
@@ -68,20 +107,6 @@ Sistema de rede hoteleira com funcionalidades de busca, filtragem, comparação 
     - MAIL_PORT
     - MAIL_USERNAME
     - MAIL_PASSWORD
-## Funcionalidades Implementadas
-
-- Pesquisar hotéis com filtros por quartos e capacidade usando Elasticsearch para consultas otimizadas.
-- Comparar dois ou mais hotéis, com cobertura de teste para validar o resultado.
-- Pesquisar hotéis individualmente por ID.
-- Reservar um quarto de hotel para uma data específica e armazenar no banco de dados PostgreSQL com foco na consistência aliada à performance.
-- Envio de e-mails utilizando RabbitMQ para gerenciamento de filas, informando o sucesso da reserva.
-
-## Funcionalidades a serem implementadas
-
-- Validação de parâmetros API.
-- Logs para cobertura de aplicativos.
-- Pesquise hotéis por geolocalização.
-- Containerização completa da aplicação.
 ## Documentação da API
 
 #### Retorna todos os hotéis
@@ -143,4 +168,3 @@ Sistema de rede hoteleira com funcionalidades de busca, filtragem, comparação 
   },
 }
 ```
-
