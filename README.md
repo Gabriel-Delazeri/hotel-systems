@@ -37,7 +37,7 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
 - Java
 - Spring Boot
 - RabbitMQ
-- Postgresql (compartilhado com Serviço de Reservas)
+- Postgresql (compartilhado com Serviço de Notificações)
 ## Funcionalidades Implementadas
 
 - Pesquisar hotéis com filtros por quartos e capacidade usando Elasticsearch para consultas otimizadas.
@@ -45,6 +45,7 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
 - Pesquisar hotéis individualmente por ID.
 - Reservar um quarto de hotel para uma data específica e armazenar no banco de dados PostgreSQL com foco na consistência aliada à performance.
 - Envio de e-mails utilizando RabbitMQ para gerenciamento de filas, informando o sucesso da reserva.
+- Observabilidade do gateway, usando Spring Actuator, Prometheus e Grafana para gerar uma interface com métricas.
 
 ## Funcionalidades a serem implementadas
 
@@ -52,6 +53,7 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
 - Logs para cobertura de aplicativos.
 - Pesquise hotéis por geolocalização.
 - Containerização completa da aplicação.
+- Implementar obsevabilidade e métricas em todos os serviços.
 ## Instalação
 
 ### Pré-requisitos
@@ -68,10 +70,9 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
    cd hotel-system
     ```
     
-2. Inicie postgres, elasticsearch e o rabbitmq:
+2. Inicie postgresql(port 5432), elasticsearch(port 9200), rabbitmq(port 15672), prometheus(port 9090) e grafana(port 3000):
    ```bash
     docker-compose up --build -d
-    
      ```
 3. Inicie o api gateway (port 8080):
    ```bash
@@ -162,7 +163,7 @@ O Serviço de Notificações é responsável por enviar notificações aos usuá
       "name": "string",
       "email": "string"
    },
-   "guest": {
+   "payment": {
       "amount": "number",
       "type": "CARD|MONEY"
   },
